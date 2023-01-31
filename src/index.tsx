@@ -3,10 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import {BrowserRouter} from "react-router-dom";
+import {renderEntireTree} from "./render";
 
-ReactDOM.render(
-    <BrowserRouter>
-    <App />
-    </BrowserRouter>,
-  document.getElementById('root')
-);
+renderEntireTree();

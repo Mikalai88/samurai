@@ -3,10 +3,9 @@ import classes from "./Message.module.css"
 
 export type MessagePropsType = {
     message: string
-    id: number
 }
 
-export const Message = (props: MessagePropsType) => {
+export const Message: React.FC<MessagePropsType> = (props) => {
     return (
         <div className={classes.message}>
             {props.message}

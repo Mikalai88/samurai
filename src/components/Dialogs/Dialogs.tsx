@@ -4,38 +4,24 @@ import {NavLink} from "react-router-dom";
 import {DialogItem, DialogItemPropsType} from "./DialogItem/DialogItem";
 import {Message, MessagePropsType} from "./Message/Message";
 
-type DialogsDataType = Array<DialogItemPropsType>
+type DialogsPropsType = {
+    dialogs: Array<DialogItemPropsType>
+    messages: Array<MessagePropsType>
+}
 
-type MessagesDataType = Array<MessagePropsType>
+export const Dialogs: React.FC<DialogsPropsType> = (props) => {
 
-export const Dialogs = () => {
+    let dialogsElements = props.dialogs.map(el => (<DialogItem name={el.name} id={el.id} />));
 
-    let dialogsData: DialogsDataType = [
-        {id: 1, name: "Mikalai"},
-        {id: 2, name: "Alex"},
-        {id: 3, name: "Igor"},
-        {id: 4, name: "Vlad"},
-        {id: 5, name: "Matt"},
-        {id: 6, name: "Nils"},
-        {id: 7, name: "Egor"}
-    ];
-
-    let messagesData: MessagesDataType = [
-        {id: 1, message: "Hi"},
-        {id: 2, message: "How are you?"},
-        {id: 3, message: "How is your expirience?"}
-    ]
+    let messagesElements = props.messages.map(m => (<Message message={m.message} />));
 
     return (
         <div className={classes.dialogs}>
             <div>
-
-                <DialogItem name={dialogsData[0].name} id={dialogsData[0].id} />
-
+                {dialogsElements}
             </div>
             <div className={classes.messages}>
-                <Message message={messagesData[0].message} id={messagesData[0].id}/>
-
+                {messagesElements}
             </div>
         </div>
     );

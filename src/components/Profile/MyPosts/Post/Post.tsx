@@ -7,7 +7,7 @@ export type PostType = {
     likesCount: number
 }
 
-export const Post = (props: PostType) => {
+export const Post: React.FC<PostType> = (props) => {
     return (
         <div className={classes.item}>
             <img className={classes.ava} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcq6DZYSEnXBlNF4GVdo6lQThmXgzNm3oiDZOthpsLtE6VPysCmJKJBEm4Je7AQm_qL6A&usqp=CAU"/>
