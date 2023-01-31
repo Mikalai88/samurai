@@ -7,13 +7,14 @@ import {Dialogs} from "./components/Dialogs/Dialogs";
 import {NavLink, Route, Routes} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
-import state, {addPost} from "./redux/state";
+import state, {addPost, changePostTextarea} from "./redux/state";
 
 function App() {
 
     let postData = state.profilePage.posts
     let dialogs = state.dialogsPage.dialogs
     let messages = state.dialogsPage.messages
+    let newPostText = state.profilePage.newPostText
 
     return (
         <div className='app-wrapper'>
@@ -21,7 +22,7 @@ function App() {
             <Navbar/>
             <div className='app-wrapper-content'>
                 <Routes>
-                    <Route path={'/profile'} element={<Profile postData={postData} addPost={addPost} />} />
+                    <Route path={'/profile'} element={<Profile postData={postData} addPost={addPost} changePostTextarea={changePostTextarea} newPostText={newPostText} />} />
                     <Route path={'/dialogs/*'} element={<Dialogs dialogs={dialogs} messages={messages} />} />
                     <Route path={'/news'} element={<News />} />
                     <Route path={'/music'} element={<Music />} />
