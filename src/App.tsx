@@ -7,14 +7,20 @@ import {Dialogs} from "./components/Dialogs/Dialogs";
 import {NavLink, Route, Routes} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
-import state, {addPost, changePostTextarea} from "./redux/state";
+import {StoreType} from "./redux/state";
 
-function App() {
+type AppPropsType = {
+    addPost: (postMessage: string) => void
+    changePostTextarea: (newPostText: string) => void
+    store: StoreType
+}
 
-    let postData = state.profilePage.posts
-    let dialogs = state.dialogsPage.dialogs
-    let messages = state.dialogsPage.messages
-    let newPostText = state.profilePage.newPostText
+function App(props: AppPropsType) {
+
+    let postData = props.store.getState().profilePage.posts
+    let dialogs = props.store.getState().dialogsPage.dialogs
+    let messages = props.store.getState().dialogsPage.messages
+    let newPostText = props.store.getState().profilePage.newPostText
 
     return (
         <div className='app-wrapper'>
@@ -22,7 +28,7 @@ function App() {
             <Navbar/>
             <div className='app-wrapper-content'>
                 <Routes>
-                    <Route path={'/profile'} element={<Profile postData={postData} addPost={addPost} changePostTextarea={changePostTextarea} newPostText={newPostText} />} />
+                    <Route path={'/profile'} element={<Profile postData={postData} addPost={props.addPost} changePostTextarea={props.changePostTextarea} newPostText={newPostText} />} />
                     <Route path={'/dialogs/*'} element={<Dialogs dialogs={dialogs} messages={messages} />} />
                     <Route path={'/news'} element={<News />} />
                     <Route path={'/music'} element={<Music />} />

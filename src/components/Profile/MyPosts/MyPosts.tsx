@@ -1,7 +1,6 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import classes from './MyPosts.module.css';
 import {Post, PostType} from "./Post/Post";
-import {changePostTextarea} from "../../../redux/state";
 
 type MyPostsPropsType = {
     postData: Array<PostType>
@@ -19,14 +18,11 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
     const addPostOnClickHandler = () => {
         if (newPostElement.current) {
             props.addPost(newPostElement.current.value);
-            props.changePostTextarea("");
         }
     }
 
-    const onChangePostHandler = () => {
-        if (newPostElement.current) {
-            props.changePostTextarea(newPostElement.current.value);
-        }
+    const onChangePostHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+            props.changePostTextarea(e.currentTarget.value);
     }
 
     return (

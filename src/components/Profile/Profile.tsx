@@ -3,7 +3,6 @@ import classes from './Profile.module.css';
 import {MyPosts} from "./MyPosts/MyPosts";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {PostType} from "./MyPosts/Post/Post";
-import {changePostTextarea} from "../../redux/state";
 
 type ProfilePropsType = {
     postData: Array<PostType>
