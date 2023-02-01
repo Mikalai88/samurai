@@ -29,15 +29,29 @@ export type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
 }
-
-// Store
 export type StoreType = {
     _state: RootStateType
-    getState: () => RootStateType
     _callSubscriber: () => void
+    getState: () => RootStateType
     subscribe: (observer: () => void) => void
-    addPost: (postMessage: string) => void
-    changePostTextarea: (newPostText: string) => void
+    // addPost: (postMessage: string) => void
+    // changePostTextarea: (newPostText: string) => void
+    dispatch: (action: ActionsTypes) => void
+}
+
+export type ActionsTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof changePostTextareaActionCreator>
+
+export const addPostActionCreator = (postMessage: string) => {
+    return {
+        type: "ADD-POST",
+        postMessage: postMessage
+    } as const
+}
+export const changePostTextareaActionCreator = (newPostText: string) => {
+    return {
+        type: "CHANGE-POST-TEXTAREA",
+        newPostText: newPostText
+    } as const
 }
 
 const store: StoreType = {
@@ -66,28 +80,47 @@ const store: StoreType = {
             ]
         }
     },
-    getState() {
-        return this._state
-    },
     _callSubscriber() {
         console.log("State changed");
+    },
+
+    getState() {
+        return this._state
     },
     subscribe(observer: () => void) {
         this._callSubscriber = observer;
     },
-    addPost(postMessage: string) {
-        let newPost: PostType = {
-            id: (this._state.profilePage.posts.length + 1),
-            message: postMessage,
-            likesCount: 0
-        };
-        this._state.profilePage.posts.push(newPost);
-        this.changePostTextarea("");
-        this._callSubscriber();
-    },
-    changePostTextarea(newPostText: string) {
-        this._state.profilePage.newPostText = newPostText;
-        this._callSubscriber();
+
+    // addPost(postMessage: string) {
+    //     let newPost: PostType = {
+    //         id: (this._state.profilePage.posts.length + 1),
+    //         message: postMessage,
+    //         likesCount: 0
+    //     };
+    //     this._state.profilePage.posts.push(newPost);
+    //     this.changePostTextarea("");
+    //     this._callSubscriber();
+    // },
+    // changePostTextarea(newPostText: string) {
+    //     this._state.profilePage.newPostText = newPostText;
+    //     this._callSubscriber();
+    // },
+
+    dispatch(action) {
+        if (action.type === "ADD-POST") {
+            const newPost: PostType = {
+                id: (this._state.profilePage.posts.length + 1),
+                // message: this._state.profilePage.newPostText,
+                message: action.postMessage,
+                likesCount: 0
+            };
+            this._state.profilePage.posts.push(newPost);
+            // this.changePostTextarea("");
+            this._callSubscriber();
+        } else if (action.type === "CHANGE-POST-TEXTAREA") {
+            this._state.profilePage.newPostText = action.newPostText;
+            this._callSubscriber();
+        }
     }
 }
 

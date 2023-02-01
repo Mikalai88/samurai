@@ -9,7 +9,7 @@ const renderEntireTree = () => {
     return (
         ReactDOM.render(
             <BrowserRouter>
-                <App store={store} addPost={store.addPost.bind(store)} changePostTextarea={store.changePostTextarea.bind(store)} />
+                <App store={store} dispatch={store.dispatch.bind(store)} />
                 {/*<App state={store.getState()} addPost={store.addPost} changePostTextarea={store.changePostTextarea} />*/}
             </BrowserRouter>,
             document.getElementById('root')
