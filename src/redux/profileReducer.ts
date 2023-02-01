@@ -19,19 +19,6 @@ const profileReducer = (state: ProfilePageType, action: any) => {
         default:
             return state;
     }
-
-    // if (action.type === ADD_POST) {
-    //     const newPost = {
-    //         id: (state.posts.length + 1),
-    //         message: action.postMessage,
-    //         likesCount: 0
-    //     };
-    //     state.posts.push(newPost);
-    // } else if (action.type === CHANGE_POST_TEXTAREA) {
-    //     state.newPostText = action.newPostText;
-    // }
-    //
-    // return state;
 }
 
 export default profileReducer;
