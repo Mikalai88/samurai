@@ -1,3 +1,7 @@
+// Types
+import profileReducer from "./profileReducer";
+import dialogsReducer from "./dialogsReducer";
+
 type MessageType = {
     id: number
     message: string
@@ -16,13 +20,14 @@ type PostDataType = Array<PostType>
 type DialogsDataType = Array<DialogItemType>
 type MessagesDataType = Array<MessageType>
 
-type ProfilePageType = {
+export type ProfilePageType = {
     posts: PostDataType
     newPostText: string
 }
-type DialogsPageType = {
+export type DialogsPageType = {
     dialogs: DialogsDataType
     messages: MessagesDataType
+    newMessageText: string
 }
 
 export type RootStateType = {
@@ -34,26 +39,51 @@ export type StoreType = {
     _callSubscriber: () => void
     getState: () => RootStateType
     subscribe: (observer: () => void) => void
-    // addPost: (postMessage: string) => void
-    // changePostTextarea: (newPostText: string) => void
     dispatch: (action: ActionsTypes) => void
 }
 
-export type ActionsTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof changePostTextareaActionCreator>
+export type ActionsTypes =
+    ReturnType<typeof addPostActionCreator>
+    | ReturnType<typeof changePostTextareaActionCreator>
+    | ReturnType<typeof addMessageActionCreator>
+    | ReturnType<typeof changeMessageTextareaActionCreator>
 
+
+// Action creators types
+const ADD_POST = "ADD-POST";
+const CHANGE_POST_TEXTAREA = "CHANGE-POST-TEXTAREA";
+const ADD_MESSAGE = "ADD-MESSAGE";
+const CHANGE_MESSAGE_TEXTAREA = "CHANGE-MESSAGE-TEXTAREA";
+
+// Action creators
 export const addPostActionCreator = (postMessage: string) => {
     return {
-        type: "ADD-POST",
+        type: ADD_POST,
         postMessage: postMessage
     } as const
 }
 export const changePostTextareaActionCreator = (newPostText: string) => {
     return {
-        type: "CHANGE-POST-TEXTAREA",
+        type: CHANGE_POST_TEXTAREA,
         newPostText: newPostText
     } as const
 }
 
+export const addMessageActionCreator = (dialogMessage: string) => {
+    return {
+        type: ADD_MESSAGE,
+        dialogMessage: dialogMessage
+    } as const
+}
+export const changeMessageTextareaActionCreator = (newMessageText: string) => {
+    return {
+        type: CHANGE_MESSAGE_TEXTAREA,
+        newMessageText: newMessageText
+    } as const
+}
+
+
+// Store
 const store: StoreType = {
     _state: {
         profilePage: {
@@ -61,7 +91,7 @@ const store: StoreType = {
                 {id: 1, message: "It's my first post.", likesCount: 12},
                 {id: 2, message: "Hello, how are you?", likesCount: 11}
             ],
-            newPostText: "it"
+            newPostText: ""
         },
         dialogsPage: {
             dialogs: [
@@ -77,7 +107,8 @@ const store: StoreType = {
                 {id: 1, message: "Hi"},
                 {id: 2, message: "How are you?"},
                 {id: 3, message: "How is your expirience?"}
-            ]
+            ],
+            newMessageText: ""
         }
     },
     _callSubscriber() {
@@ -107,22 +138,37 @@ const store: StoreType = {
     // },
 
     dispatch(action) {
-        if (action.type === "ADD-POST") {
-            const newPost: PostType = {
-                id: (this._state.profilePage.posts.length + 1),
-                // message: this._state.profilePage.newPostText,
-                message: action.postMessage,
-                likesCount: 0
-            };
-            this._state.profilePage.posts.push(newPost);
-            // this.changePostTextarea("");
-            this._callSubscriber();
-        } else if (action.type === "CHANGE-POST-TEXTAREA") {
-            this._state.profilePage.newPostText = action.newPostText;
-            this._callSubscriber();
-        }
+
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+
+        this._callSubscriber();
+        // if (action.type === ADD_POST) {
+        //     const newPost: PostType = {
+        //         id: (this._state.profilePage.posts.length + 1),
+        //         message: action.postMessage,
+        //         likesCount: 0
+        //     };
+        //     this._state.profilePage.posts.push(newPost);
+        //     // this.changePostTextarea("");
+        //     this._callSubscriber();
+        // } else if (action.type === CHANGE_POST_TEXTAREA) {
+        //     this._state.profilePage.newPostText = action.newPostText;
+        //     this._callSubscriber();
+        // } else if (action.type === ADD_MESSAGE) {
+        //     const newMessage: MessageType = {
+        //         id: (this._state.dialogsPage.messages.length + 1),
+        //         message: action.dialogMessage
+        //     };
+        //     this._state.dialogsPage.messages.push(newMessage);
+        // } else if (action.type === CHANGE_MESSAGE_TEXTAREA) {
+        //     this._state.dialogsPage.newMessageText = action.newMessageText;
+        //     this._callSubscriber();
+        // }
     }
 }
+
+export default store;
 
 // State
 // let renderEntireTree = () => {
@@ -171,5 +217,3 @@ const store: StoreType = {
 //     state.profilePage.newPostText = newPostText;
 //     renderEntireTree();
 // }
-
-export default store;

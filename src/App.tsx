@@ -20,6 +20,7 @@ function App(props: AppPropsType) {
     let dialogs = props.store.getState().dialogsPage.dialogs
     let messages = props.store.getState().dialogsPage.messages
     let newPostText = props.store.getState().profilePage.newPostText
+    let newMessageText = props.store.getState().dialogsPage.newMessageText
 
     return (
         <div className='app-wrapper'>
@@ -28,7 +29,7 @@ function App(props: AppPropsType) {
             <div className='app-wrapper-content'>
                 <Routes>
                     <Route path={'/profile'} element={<Profile postData={postData} dispatch={props.dispatch} newPostText={newPostText} />} />
-                    <Route path={'/dialogs/*'} element={<Dialogs dialogs={dialogs} messages={messages} />} />
+                    <Route path={'/dialogs/*'} element={<Dialogs dialogs={dialogs} dispatch={props.dispatch} newMessageText={newMessageText} messages={messages} />} />
                     <Route path={'/news'} element={<News />} />
                     <Route path={'/music'} element={<Music />} />
                 </Routes>
