@@ -19,6 +19,19 @@ const profileReducer = (state: ProfilePageType, action: any) => {
         default:
             return state;
     }
-}
+};
+
+export const addPostActionCreator = (postMessage: string) => {
+    return {
+        type: ADD_POST,
+        postMessage: postMessage
+    } as const
+};
+export const changePostTextareaActionCreator = (newPostText: string) => {
+    return {
+        type: CHANGE_POST_TEXTAREA,
+        newPostText: newPostText
+    } as const
+};
 
 export default profileReducer;

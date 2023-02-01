@@ -21,4 +21,17 @@ const dialogsReducer = (state: DialogsPageType, action: any) => {
     }
 };
 
+export const addMessageActionCreator = (dialogMessage: string) => {
+    return {
+        type: ADD_MESSAGE,
+        dialogMessage: dialogMessage
+    } as const
+}
+export const changeMessageTextareaActionCreator = (newMessageText: string) => {
+    return {
+        type: CHANGE_MESSAGE_TEXTAREA,
+        newMessageText: newMessageText
+    } as const
+};
+
 export default dialogsReducer;
