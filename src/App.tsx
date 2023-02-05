@@ -7,7 +7,8 @@ import {Dialogs} from "./components/Dialogs/Dialogs";
 import {NavLink, Route, Routes} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
-import {ActionsTypes, StoreType} from "./redux/state";
+import {ActionsTypes, StoreType} from "./redux/reduxStore";
+
 
 type AppPropsType = {
     dispatch: (action: ActionsTypes) => void

@@ -1,9 +1,29 @@
-import {ProfilePageType} from "./state";
 
 const ADD_POST = "ADD-POST";
 const CHANGE_POST_TEXTAREA = "CHANGE-POST-TEXTAREA";
 
-const profileReducer = (state: ProfilePageType, action: any) => {
+type PostType = {
+    message: string
+    id: number
+    likesCount: number
+}
+
+type PostDataType = Array<PostType>
+
+export type ProfilePageType = {
+    posts: PostDataType
+    newPostText: string
+}
+
+let initialState: ProfilePageType = {
+    posts: [
+        {id: 1, message: "It's my first post.", likesCount: 12},
+        {id: 2, message: "Hello, how are you?", likesCount: 11}
+    ],
+    newPostText: ""
+}
+
+const profileReducer = (state: ProfilePageType = initialState, action: any): ProfilePageType => {
     switch(action.type) {
         case ADD_POST:
             const newPost = {
