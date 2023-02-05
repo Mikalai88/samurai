@@ -56,17 +56,26 @@ const dialogsReducer = (state: DialogsPageType = initialState, action: any): Dia
     }
 };
 
-export const addMessageActionCreator = (dialogMessage: string) => {
+type AddMessageActionCreatorType = {
+    type: typeof ADD_MESSAGE
+    dialogMessage: string
+}
+
+type ChangeMessageTextareaActionCreatorType = {
+    type: typeof CHANGE_MESSAGE_TEXTAREA
+    newMessageText: string
+}
+export const addMessageActionCreator = (dialogMessage: string): AddMessageActionCreatorType => {
     return {
         type: ADD_MESSAGE,
         dialogMessage: dialogMessage
-    } as const
+    }
 }
-export const changeMessageTextareaActionCreator = (newMessageText: string) => {
+export const changeMessageTextareaActionCreator = (newMessageText: string): ChangeMessageTextareaActionCreatorType => {
     return {
         type: CHANGE_MESSAGE_TEXTAREA,
         newMessageText: newMessageText
-    } as const
+    }
 };
 
 export default dialogsReducer;

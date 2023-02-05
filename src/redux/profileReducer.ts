@@ -41,17 +41,26 @@ const profileReducer = (state: ProfilePageType = initialState, action: any): Pro
     }
 };
 
-export const addPostActionCreator = (postMessage: string) => {
+type AddPostActionCreatorType = {
+    type: typeof ADD_POST
+    postMessage: string
+}
+
+type ChangePostTextareaActionCreatorType = {
+    type: typeof CHANGE_POST_TEXTAREA
+    newPostText: string
+}
+export const addPostActionCreator = (postMessage: string): AddPostActionCreatorType => {
     return {
         type: ADD_POST,
         postMessage: postMessage
-    } as const
+    }
 };
-export const changePostTextareaActionCreator = (newPostText: string) => {
+export const changePostTextareaActionCreator = (newPostText: string): ChangePostTextareaActionCreatorType => {
     return {
         type: CHANGE_POST_TEXTAREA,
         newPostText: newPostText
-    } as const
+    }
 };
 
 export default profileReducer;
