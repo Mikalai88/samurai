@@ -10,8 +10,8 @@ type MyPostsPropsType = {
 export const MyPostsContainer: React.FC<MyPostsPropsType> = (props) => {
     let state = props.store.getState()
 
-    const addPostOnClickHandler = () => {
-            props.store.dispatch(addPostActionCreator());
+    const addPostOnClickHandler = (newPost: string) => {
+            props.store.dispatch(addPostActionCreator(newPost));
             props.store.dispatch(changePostTextareaActionCreator(""));
     }
 

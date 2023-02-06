@@ -3,35 +3,31 @@ import classes from './Dialogs.module.css';
 import {NavLink} from "react-router-dom";
 import {DialogItem, DialogItemPropsType} from "./DialogItem/DialogItem";
 import {Message, MessagePropsType} from "./Message/Message";
-import {addMessageActionCreator, changeMessageTextareaActionCreator} from "../../redux/dialogsReducer";
-import {ActionsTypes} from "../../redux/reduxStore";
 
 type DialogsPropsType = {
     dialogs: Array<DialogItemPropsType>
     messages: Array<MessagePropsType>
-    dispatch: (action: ActionsTypes) => void
     newMessageText: string
+    addMessageOnClickHandler: (newMessageText: string) => void
+    onChangeMessageHandler: (changedMessageText: string) => void
 }
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
 
     let dialogsElements = props.dialogs.map(el => (<DialogItem name={el.name} id={el.id} />));
-
     let messagesElements = props.messages.map(m => (<Message message={m.message} />));
-
     const newMessageElement = React.createRef<HTMLTextAreaElement>();
 
-    const addMessageOnClickHandler = () => {
+    const onAddMessageOnClickHandler = () => {
         if (newMessageElement.current) {
-            // props.addPost(newPostElement.current.value);
-            props.dispatch(addMessageActionCreator(newMessageElement.current.value));
-            props.dispatch(changeMessageTextareaActionCreator(""));
+            let newMessage = newMessageElement.current.value
+            props.addMessageOnClickHandler(newMessage)
         }
     }
 
-    const onChangeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        // props.changePostTextarea(e.currentTarget.value);
-        props.dispatch(changeMessageTextareaActionCreator(e.currentTarget.value));
+    const onOnChangeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        let text = e.currentTarget.value
+        props.onChangeMessageHandler(text)
     }
 
     return (
@@ -47,9 +43,9 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
                     <textarea
                         ref={newMessageElement}
                         value={props.newMessageText}
-                        onChange={onChangeMessageHandler} />
+                        onChange={onOnChangeMessageHandler} />
                 </div>
-                <div><button onClick={addMessageOnClickHandler}>Add message</button></div>
+                <div><button onClick={onAddMessageOnClickHandler}>Add message</button></div>
             </div>
         </div>
     );

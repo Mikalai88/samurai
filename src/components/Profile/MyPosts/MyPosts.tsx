@@ -6,7 +6,7 @@ type MyPostsPropsType = {
     postData: Array<PostType>
     newPostText: string
     onChangePostHandler: (text: string) => void
-    addPostOnClickHandler: () => void
+    addPostOnClickHandler: (newPost: string) => void
 }
 
 export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
@@ -18,7 +18,10 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
     const newPostElement = React.createRef<HTMLTextAreaElement>();
 
     const onAddPostOnClickHandler = () => {
-            props.addPostOnClickHandler()
+        if (newPostElement.current) {
+            let newPost = newPostElement.current.value
+            props.addPostOnClickHandler(newPost)
+        }
     }
 
     const onOnChangePostHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {

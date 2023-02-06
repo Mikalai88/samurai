@@ -8,6 +8,7 @@ import {NavLink, Route, Routes} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {ActionsTypes, StoreType} from "./redux/reduxStore";
+import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 
 
 type AppPropsType = {
@@ -30,7 +31,11 @@ function App(props: AppPropsType) {
             <div className='app-wrapper-content'>
                 <Routes>
                     <Route path={'/profile'} element={<Profile store={props.store} />} />
-                    <Route path={'/dialogs/*'} element={<Dialogs dialogs={dialogs} dispatch={props.dispatch} newMessageText={newMessageText} messages={messages} />} />
+                    <Route path={'/dialogs/*'} element={<DialogsContainer store={props.store} />} />
+                    {/*<Route path={'/dialogs/*'} element={<Dialogs dialogs={dialogs} */}
+                    {/*                                             dispatch={props.dispatch} */}
+                    {/*                                             newMessageText={newMessageText} */}
+                    {/*                                             messages={messages} />} />*/}
                     <Route path={'/news'} element={<News />} />
                     <Route path={'/music'} element={<Music />} />
                 </Routes>
