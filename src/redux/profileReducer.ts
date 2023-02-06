@@ -43,17 +43,15 @@ const profileReducer = (state: ProfilePageType = initialState, action: any): Pro
 
 type AddPostActionCreatorType = {
     type: typeof ADD_POST
-    postMessage: string
 }
 
 type ChangePostTextareaActionCreatorType = {
     type: typeof CHANGE_POST_TEXTAREA
     newPostText: string
 }
-export const addPostActionCreator = (postMessage: string): AddPostActionCreatorType => {
+export const addPostActionCreator = (): AddPostActionCreatorType => {
     return {
-        type: ADD_POST,
-        postMessage: postMessage
+        type: ADD_POST
     }
 };
 export const changePostTextareaActionCreator = (newPostText: string): ChangePostTextareaActionCreatorType => {

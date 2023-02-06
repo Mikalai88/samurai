@@ -29,7 +29,7 @@ function App(props: AppPropsType) {
             <Navbar/>
             <div className='app-wrapper-content'>
                 <Routes>
-                    <Route path={'/profile'} element={<Profile postData={postData} dispatch={props.dispatch} newPostText={newPostText} />} />
+                    <Route path={'/profile'} element={<Profile store={props.store} />} />
                     <Route path={'/dialogs/*'} element={<Dialogs dialogs={dialogs} dispatch={props.dispatch} newMessageText={newMessageText} messages={messages} />} />
                     <Route path={'/news'} element={<News />} />
                     <Route path={'/music'} element={<Music />} />
